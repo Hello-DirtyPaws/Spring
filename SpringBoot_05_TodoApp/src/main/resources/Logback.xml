@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<configuration>
+
+	<!-- Console Appender -->
+	<appender name="STDOUT"
+		class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+			<pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} %-5level [%thread] %logger{36} - %msg%n</pattern>
+		</encoder>
+	</appender>
+
+	<appender name="FILE-ROLLING" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>logs/toDoListAppLog.log</file>
+
+		<rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+			
+			<!-- New name pattern when moving the current log file to archived (based on date and serial number) -->
+			<fileNamePattern>logs/archived/toDoListAppLog.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+			
+			<!-- Each archived file, size max 5MB -->
+			<maxFileSize>5MB</maxFileSize>
+			
+			<!-- Total size of all archive files, if total size > 20MB, it will delete old archived file -->
+			<totalSizeCap>20MB</totalSizeCap>
+			
+			<!-- 60 days to keep -->
+			<maxHistory>60</maxHistory>
+		</rollingPolicy>
+
+		<encoder>
+			<pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} %-5level [%thread] %logger{36} - %msg%n</pattern>
+		</encoder>
+	</appender>
+	
+	<!-- Log all the log messages from 'com.java.*' classes in the file and on the console -->
+	<logger name="com.java" level="INFO" additivity="false">
+		<appender-ref ref="FILE-ROLLING"/>
+		<appender-ref ref="STDOUT"/>
+	</logger>
+
+	<!-- Application level logging (Starting, shutting down, application loading, etc.) -->
+	<root level="INFO">
+		<appender-ref ref="STDOUT"/>
+	</root>
+</configuration>
+
+
