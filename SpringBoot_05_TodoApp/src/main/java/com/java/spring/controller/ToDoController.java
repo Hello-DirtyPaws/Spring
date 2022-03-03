@@ -7,7 +7,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -34,8 +36,8 @@ public class ToDoController
 		return allItems;
 	}
 	
-	@GetMapping("/getItemById")
-	public ToDoItem getItemById(@RequestParam int id)
+	@GetMapping("/getItem/{id}")
+	public ToDoItem getItemById(@PathVariable int id)
 	{
 		log.info("GET : [/getItem] invoked");
 		if(id < 1) 
@@ -89,7 +91,7 @@ public class ToDoController
 		}		
 	}
 	
-	@PostMapping("/updateItem")
+	@PutMapping("/updateItem")
 	public boolean updateItem(@RequestBody ToDoItem item)
 	{
 		log.info("POST : [/updateItem] invoked");
@@ -112,8 +114,8 @@ public class ToDoController
 		return isUpdated;
 	}
 	
-	@DeleteMapping("/deleteItem")
-	public boolean deleteItem(@RequestParam int id)
+	@DeleteMapping("/deleteItem/{id}")
+	public boolean deleteItem(@PathVariable int id)
 	{
 		log.info("DELETE : [/deleteItem] invoked");
 		if(id < 1)
